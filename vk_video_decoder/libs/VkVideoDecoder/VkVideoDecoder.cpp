@@ -120,7 +120,12 @@ int32_t VkVideoDecoder::StartVideoSequence(VkParserDetectedVideoFormat* pVideoFo
             m_vkDevCtx->getPhysicalDevice(),
             &videoQueueFamily,
             VK_QUEUE_VIDEO_DECODE_BIT_KHR,
-            VK_VIDEO_CODEC_OPERATION_DECODE_H264_BIT_KHR | VK_VIDEO_CODEC_OPERATION_DECODE_H265_BIT_KHR);
+            VK_VIDEO_CODEC_OPERATION_DECODE_H264_BIT_KHR
+            | VK_VIDEO_CODEC_OPERATION_DECODE_H265_BIT_KHR
+#ifdef ENABLE_AV1_DECODER
+            | VK_VIDEO_CODEC_OPERATION_DECODE_AV1_BIT_KHR
+#endif
+    );
     assert(videoCodecs != VK_VIDEO_CODEC_OPERATION_NONE_KHR);
 
     if (m_dumpDecodeData) {
